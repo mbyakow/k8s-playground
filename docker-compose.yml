@@ -1,0 +1,23 @@
+---
+version: '3.5'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./build/docker/app/Dockerfile
+    volumes:
+      - ./public:/var/www
+
+  webserver:
+    build:
+      context: .
+      dockerfile: ./build/docker/nginx/Dockerfile
+    volumes:
+      - ./public:/var/www
+      - ./build/docker/nginx/conf.d/:/etc/nginx/conf.d/
+      - ./build/docker/logs/nginx:/var/log/nginx
+    depends_on:
+      - app
+    ports:
+      - "7500:80"
