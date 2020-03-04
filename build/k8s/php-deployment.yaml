@@ -17,5 +17,5 @@ spec:
     spec:
       containers:
         - name: php-app
-          image: k8s-playground_webserver
+          image: k8s-playground_app
           imagePullPolicy: Never

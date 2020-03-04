@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app2-deployment
+  labels:
+    app: app2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app2
+  template:
+    metadata:
+      labels:
+        app: app2
+    spec:
+      volumes:
+        - name: shared-data
+          emptyDir: {}
+      containers:
+        - name: nginx
+          image: k8s-playground_webserver
+          volumeMounts:
+            - name: shared-data
+              mountPath: /var/www
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 80
+        - name: php-app
+          image: k8s-playground_app
+          volumeMounts:
+            - name: shared-data
+              mountPath: /var/www
+          imagePullPolicy: Never
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: app2
+  name: app2-service
+  namespace: default
+spec:
+  type: ClusterIP  # use ClusterIP as type here
+  ports:
+    - port: 80
+  selector:
+    app: app2

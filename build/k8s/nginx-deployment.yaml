@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: k8s-playground_app
+        image: k8s-playground_webserver
         imagePullPolicy: Never
         ports:
         - containerPort: 80
