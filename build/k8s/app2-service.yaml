@@ -14,24 +14,17 @@ spec:
       labels:
         app: app2
     spec:
-      volumes:
-        - name: shared-data
-          emptyDir: {}
       containers:
         - name: nginx
           image: k8s-playground_webserver
-          volumeMounts:
-            - name: shared-data
-              mountPath: /var/www
           imagePullPolicy: Never
           ports:
             - containerPort: 80
         - name: php-app
           image: k8s-playground_app
-          volumeMounts:
-            - name: shared-data
-              mountPath: /var/www
           imagePullPolicy: Never
+          ports:
+           - containerPort: 9000
 
 ---
 
